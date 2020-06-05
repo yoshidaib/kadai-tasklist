@@ -13,11 +13,11 @@
     <% if logged_in? %>
       <%= link_to 'Logout', logout_path, method: :delete %>
       <p>ログイン完了ユーザ：<%= current_user.name %></p>
-      <%= render 'layouts/flash_tasks' %>
+      <%= render 'layouts/flash_messages' %>
     <% else %>
       <%= link_to 'Signup', signup_path %>
       <%= link_to 'Login', login_path %>
-      <%= render 'layouts/flash_tasks' %>
+      <%= render 'layouts/flash_messages' %>
     <% end %>
     <%= yield %>
   </body>

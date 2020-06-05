@@ -1,14 +1,13 @@
 class TasksController < ApplicationController
-    before_action :require_user_logged_in, only: [:index, :show, :new, :create]
-    before_action :correct_user, only: [:show, :edit, :destroy]
+    before_action :require_user_logged_in
+    before_action :correct_user, only: [:show, :edit, :destroy, :update]
 
-    include SessionsHelper
     def index
         @tasks = current_user.tasks.order(id: :desc)
     end
     
     def show
-        @task = Task.find(params[:id])
+        correct_user
     end
     
     def new
@@ -28,12 +27,11 @@ class TasksController < ApplicationController
     end
     
     def edit
-        @task = Task.find(params[:id])
+        
     end
     
     def update
-        @task = Task.find(params[:id])
-
+        correct_user
         if @task.update(task_params)
           flash[:success] = 'Task は正常に更新されました'
           redirect_to @task
@@ -44,7 +42,7 @@ class TasksController < ApplicationController
     end
     
     def destroy
-        @task = Task.find(params[:id])
+        correct_user
         @task.destroy
     
         flash[:success] = 'Task は正常に削除されました'
